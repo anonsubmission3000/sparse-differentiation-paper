@@ -1,0 +1,6 @@
+[deps]
+DifferentiationInterface = "a0c0ee7d-e4b9-4e03-894e-1c5f64a51d63"
+Flux = "587475ba-b771-5e3f-ad9e-33799f191a9c"
+ForwardDiff = "f6369f11-7733-5829-9624-2563aa707210"
+SparseConnectivityTracer = "9f842d2f-2579-4b1d-911e-f412cf18a3f5"
+SparseMatrixColorings = "0a514795-09f3-496d-8182-132a7b665d35"

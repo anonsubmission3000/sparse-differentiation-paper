@@ -1,0 +1,63 @@
+\begin{table}[!ht]
+\setlength\tabcolsep{0pt}
+\centering
+\begin{threeparttable}
+\begin{tabular}{@{\extracolsep{2ex}}*{7}{lcccccc}}
+\toprule
+\multicolumn{2}{c}{\textbf{Problem}} & \multicolumn{2}{c}{\textbf{Sparsity}} & \multicolumn{3}{c}{\textbf{Pattern detection\tnote{1}}} \\
+\cmidrule{1-2}\cmidrule{3-4}\cmidrule{5-7}
+\multicolumn{1}{c}{Name} & Inputs & Zeros & Colors\tnote{2} & Symbolics & \multicolumn{2}{c}{SCT\tnote{3}} \\
+\cmidrule{1-1}\cmidrule{2-2}\cmidrule{3-3}\cmidrule{4-4}\cmidrule{5-5}\cmidrule{6-7}
+\textit{3\_lmbd} & 24 & 91.15\% & 6 & $1.29 \cdot 10^{-3}$ & $\mathbf{5.59 \cdot 10^{-5}}$ & \textbf{(23.1)} \\
+\textit{5\_pjm} & 44 & 94.99\% & 8 & $2.49 \cdot 10^{-3}$ & $\mathbf{1.19 \cdot 10^{-4}}$ & \textbf{(20.9)} \\
+\textit{14\_ieee} & 118 & 97.84\% & 10 & $9.02 \cdot 10^{-3}$ & $\mathbf{5.19 \cdot 10^{-4}}$ & \textbf{(17.4)} \\
+\textit{24\_ieee\_rts} & 266 & 99.22\% & 12 & $1.92 \cdot 10^{-2}$ & $\mathbf{1.50 \cdot 10^{-3}}$ & \textbf{(12.8)} \\
+\textit{30\_as} & 236 & 98.89\% & 12 & $2.04 \cdot 10^{-2}$ & $\mathbf{1.60 \cdot 10^{-3}}$ & \textbf{(12.7)} \\
+\textit{30\_ieee} & 236 & 98.89\% & 12 & $2.03 \cdot 10^{-2}$ & $\mathbf{1.60 \cdot 10^{-3}}$ & \textbf{(12.7)} \\
+\textit{39\_epri} & 282 & 99.10\% & 10 & $2.45 \cdot 10^{-2}$ & $\mathbf{2.10 \cdot 10^{-3}}$ & \textbf{(11.7)} \\
+\textit{57\_ieee} & 448 & 99.41\% & 14 & $4.68 \cdot 10^{-2}$ & $\mathbf{4.91 \cdot 10^{-3}}$ & \textbf{(9.5)} \\
+\textit{60\_c} & 518 & 99.56\% & 12 & $5.15 \cdot 10^{-2}$ & $\mathbf{5.76 \cdot 10^{-3}}$ & \textbf{(8.9)} \\
+\textit{73\_ieee\_rts} & 824 & 99.74\% & 12 & $9.84 \cdot 10^{-2}$ & $\mathbf{1.09 \cdot 10^{-2}}$ & \textbf{(9.0)} \\
+\textit{89\_pegase} & 1042 & 99.74\% & 26 & $1.80 \cdot 10^{-1}$ & $\mathbf{2.20 \cdot 10^{-2}}$ & \textbf{(8.2)} \\
+\textit{118\_ieee} & 1088 & 99.77\% & 12 & $1.57 \cdot 10^{-1}$ & $\mathbf{2.11 \cdot 10^{-2}}$ & \textbf{(7.5)} \\
+\textit{162\_ieee\_dtc} & 1484 & 99.82\% & 16 & $2.99 \cdot 10^{-1}$ & $\mathbf{3.33 \cdot 10^{-2}}$ & \textbf{(9.0)} \\
+\textit{179\_goc} & 1468 & 99.83\% & 14 & $2.59 \cdot 10^{-1}$ & $\mathbf{3.09 \cdot 10^{-2}}$ & \textbf{(8.4)} \\
+\textit{197\_snem} & 1608 & 99.85\% & 14 & $3.02 \cdot 10^{-1}$ & $\mathbf{3.57 \cdot 10^{-2}}$ & \textbf{(8.5)} \\
+\textit{200\_activ} & 1456 & 99.82\% & 12 & $2.59 \cdot 10^{-1}$ & $\mathbf{2.92 \cdot 10^{-2}}$ & \textbf{(8.9)} \\
+\textit{240\_pserc} & 2558 & 99.91\% & 16 & $6.72 \cdot 10^{-1}$ & $\mathbf{7.32 \cdot 10^{-2}}$ & \textbf{(9.2)} \\
+\textit{300\_ieee} & 2382 & 99.89\% & 14 & $6.20 \cdot 10^{-1}$ & $\mathbf{6.95 \cdot 10^{-2}}$ & \textbf{(8.9)} \\
+\textit{500\_goc} & 4254 & 99.94\% & 14 & $1.81 \cdot 10^{0}$ & $\mathbf{1.40 \cdot 10^{-1}}$ & \textbf{(12.9)} \\
+\textit{588\_sdet} & 4110 & 99.94\% & 14 & $1.71 \cdot 10^{0}$ & $\mathbf{1.40 \cdot 10^{-1}}$ & \textbf{(12.2)} \\
+\textit{793\_goc} & 5432 & 99.95\% & 14 & $2.96 \cdot 10^{0}$ & $\mathbf{2.65 \cdot 10^{-1}}$ & \textbf{(11.2)} \\
+\textit{1354\_pegase} & 11192 & 99.98\% & 18 & $1.58 \cdot 10^{1}$ & $\mathbf{4.14 \cdot 10^{-1}}$ & \textbf{(38.1)} \\
+\textit{1803\_snem} & 15246 & 99.98\% & 16 & $3.02 \cdot 10^{1}$ & $\mathbf{7.17 \cdot 10^{-1}}$ & \textbf{(42.1)} \\
+\textit{1888\_rte} & 14480 & 99.98\% & 18 & $2.72 \cdot 10^{1}$ & $\mathbf{6.53 \cdot 10^{-1}}$ & \textbf{(41.7)} \\
+\textit{1951\_rte} & 15018 & 99.98\% & 20 & $3.10 \cdot 10^{1}$ & $\mathbf{6.50 \cdot 10^{-1}}$ & \textbf{(47.7)} \\
+\textit{2000\_goc} & 19008 & 99.99\% & 18 & $6.55 \cdot 10^{1}$ & $\mathbf{1.10 \cdot 10^{0}}$ & \textbf{(59.5)} \\
+\textit{2312\_goc} & 17128 & 99.98\% & 16 & $4.43 \cdot 10^{1}$ & $\mathbf{8.69 \cdot 10^{-1}}$ & \textbf{(51.0)} \\
+\textit{2383wp\_k} & 17004 & 99.98\% & 16 & $4.39 \cdot 10^{1}$ & $\mathbf{8.48 \cdot 10^{-1}}$ & \textbf{(51.7)} \\
+\textit{2736sp\_k} & 19088 & 99.99\% & 14 & $6.31 \cdot 10^{1}$ & $\mathbf{1.02 \cdot 10^{0}}$ & \textbf{(62.1)} \\
+\textit{2737sop\_k} & 18988 & 99.99\% & 16 & $5.62 \cdot 10^{1}$ & $\mathbf{1.02 \cdot 10^{0}}$ & \textbf{(55.1)} \\
+\textit{2742\_goc} & 24540 & 99.99\% & 14 & $1.37 \cdot 10^{2}$ & $\mathbf{1.11 \cdot 10^{0}}$ & \textbf{(122.8)} \\
+\textit{2746wop\_k} & 19582 & 99.99\% & 16 & $6.61 \cdot 10^{1}$ & $\mathbf{1.06 \cdot 10^{0}}$ & \textbf{(62.5)} \\
+\textit{2746wp\_k} & 19520 & 99.99\% & 14 & $6.35 \cdot 10^{1}$ & $\mathbf{1.04 \cdot 10^{0}}$ & \textbf{(60.9)} \\
+\textit{2848\_rte} & 21822 & 99.99\% & 20 & $8.57 \cdot 10^{1}$ & $\mathbf{1.23 \cdot 10^{0}}$ & \textbf{(69.5)} \\
+\textit{2853\_sdet} & 23028 & 99.99\% & 26 & $1.04 \cdot 10^{2}$ & $\mathbf{8.57 \cdot 10^{-1}}$ & \textbf{(121.2)} \\
+\textit{2868\_rte} & 22090 & 99.99\% & 20 & $1.10 \cdot 10^{2}$ & $\mathbf{1.27 \cdot 10^{0}}$ & \textbf{(86.7)} \\
+\textit{2869\_pegase} & 25086 & 99.99\% & 28 & $1.44 \cdot 10^{2}$ & $\mathbf{1.06 \cdot 10^{0}}$ & \textbf{(136.2)} \\
+\textit{3012wp\_k} & 21082 & 99.99\% & 14 & $8.36 \cdot 10^{1}$ & $\mathbf{1.22 \cdot 10^{0}}$ & \textbf{(68.4)} \\
+\textit{3022\_goc} & 23238 & 99.99\% & 18 & $1.45 \cdot 10^{2}$ & $\mathbf{9.83 \cdot 10^{-1}}$ & \textbf{(147.8)} \\
+\textit{3120sp\_k} & 21608 & 99.99\% & 18 & $9.46 \cdot 10^{1}$ & $\mathbf{1.31 \cdot 10^{0}}$ & \textbf{(72.1)} \\
+\textit{3375wp\_k} & 24350 & 99.99\% & 18 & $1.27 \cdot 10^{2}$ & $\mathbf{9.82 \cdot 10^{-1}}$ & \textbf{(128.9)} \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]
+\footnotesize
+\item[1]Wall time in seconds.
+\item[2]Number of colors resulting from greedy symmetric coloring.
+\item[3]In parentheses: Wall time ratio compared to Symbolics.jl's pattern detection (higher is better).
+\end{tablenotes}
+\end{threeparttable}
+\caption{Performance comparison of Hessian sparsity pattern detection on the Lagrangian of PGLib optimization problems.}
+\label{tab:opf_detection}
+\end{table}

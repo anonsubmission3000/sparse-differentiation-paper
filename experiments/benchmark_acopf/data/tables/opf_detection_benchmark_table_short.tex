@@ -1,0 +1,28 @@
+\begin{table}[!ht]
+\setlength\tabcolsep{0pt}
+\centering
+\begin{threeparttable}
+\begin{tabular}{@{\extracolsep{2ex}}*{7}{lcccccc}}
+\toprule
+\multicolumn{2}{c}{\textbf{Problem}} & \multicolumn{2}{c}{\textbf{Sparsity}} & \multicolumn{3}{c}{\textbf{Pattern detection\tnote{1}}} \\
+\cmidrule{1-2}\cmidrule{3-4}\cmidrule{5-7}
+\multicolumn{1}{c}{Name} & Inputs & Zeros & Colors\tnote{2} & Symbolics & \multicolumn{2}{c}{SCT\tnote{3}} \\
+\cmidrule{1-1}\cmidrule{2-2}\cmidrule{3-3}\cmidrule{4-4}\cmidrule{5-5}\cmidrule{6-7}
+\textit{3\_lmbd} & 24 & 91.15\% & 6 & $1.29 \cdot 10^{-3}$ & $\mathbf{5.59 \cdot 10^{-5}}$ & \textbf{(23.1)} \\
+\textit{60\_c} & 518 & 99.56\% & 12 & $5.15 \cdot 10^{-2}$ & $\mathbf{5.76 \cdot 10^{-3}}$ & \textbf{(8.9)} \\
+\textit{240\_pserc} & 2558 & 99.91\% & 16 & $6.72 \cdot 10^{-1}$ & $\mathbf{7.32 \cdot 10^{-2}}$ & \textbf{(9.2)} \\
+\textit{1951\_rte} & 15018 & 99.98\% & 20 & $3.10 \cdot 10^{1}$ & $\mathbf{6.50 \cdot 10^{-1}}$ & \textbf{(47.7)} \\
+\textit{2746wp\_k} & 19520 & 99.99\% & 14 & $6.35 \cdot 10^{1}$ & $\mathbf{1.04 \cdot 10^{0}}$ & \textbf{(60.9)} \\
+\textit{3375wp\_k} & 24350 & 99.99\% & 18 & $1.27 \cdot 10^{2}$ & $\mathbf{9.82 \cdot 10^{-1}}$ & \textbf{(128.9)} \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]
+\footnotesize
+\item[1]Wall time in seconds.
+\item[2]Number of colors resulting from greedy symmetric coloring.
+\item[3]In parentheses: Wall time ratio compared to Symbolics.jl's pattern detection (higher is better).
+\end{tablenotes}
+\end{threeparttable}
+\caption{Performance comparison of Hessian sparsity pattern detection on the Lagrangian of PGLib optimization problems.}
+\label{tab:opf_detection_short}
+\end{table}

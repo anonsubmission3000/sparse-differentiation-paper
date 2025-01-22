@@ -1,0 +1,63 @@
+\begin{table}[!ht]
+\setlength\tabcolsep{0pt}
+\centering
+\begin{threeparttable}
+\begin{tabular}{@{\extracolsep{2ex}}*{9}{lcccccccc}}
+\toprule
+\multicolumn{2}{c}{\textbf{Problem}} & \multicolumn{2}{c}{\textbf{Sparsity}} & \multicolumn{5}{c}{\textbf{Hessian computation\tnote{1}}} \\
+\cmidrule{1-2}\cmidrule{3-4}\cmidrule{5-9}
+\multicolumn{1}{c}{Name} & Inputs & Zeros & Colors\tnote{2} & AD (prepared) & \multicolumn{2}{c}{ASD (prepared)\tnote{3}} & \multicolumn{2}{c}{ASD (unprepared)\tnote{3}} \\
+\cmidrule{1-1}\cmidrule{2-2}\cmidrule{3-3}\cmidrule{4-4}\cmidrule{5-5}\cmidrule{6-7}\cmidrule{8-9}
+\textit{3\_lmbd} & 24 & 91.15\% & 6 & $1.82 \cdot 10^{-4}$ & $\mathbf{8.29 \cdot 10^{-5}}$ & \textbf{(2.2)} & $1.45 \cdot 10^{-4}$ & (1.3) \\
+\textit{5\_pjm} & 44 & 94.99\% & 8 & $6.33 \cdot 10^{-4}$ & $\mathbf{1.71 \cdot 10^{-4}}$ & \textbf{(3.7)} & $3.03 \cdot 10^{-4}$ & (2.1) \\
+\textit{14\_ieee} & 118 & 97.84\% & 10 & $5.38 \cdot 10^{-3}$ & $\mathbf{4.84 \cdot 10^{-4}}$ & \textbf{(11.1)} & $1.12 \cdot 10^{-3}$ & (4.8) \\
+\textit{24\_ieee\_rts} & 266 & 99.22\% & 12 & $2.56 \cdot 10^{-2}$ & $\mathbf{1.04 \cdot 10^{-3}}$ & \textbf{(24.7)} & $2.74 \cdot 10^{-3}$ & (9.3) \\
+\textit{30\_as} & 236 & 98.89\% & 12 & $2.39 \cdot 10^{-2}$ & $\mathbf{1.10 \cdot 10^{-3}}$ & \textbf{(21.8)} & $2.84 \cdot 10^{-3}$ & (8.4) \\
+\textit{30\_ieee} & 236 & 98.89\% & 12 & $2.37 \cdot 10^{-2}$ & $\mathbf{1.09 \cdot 10^{-3}}$ & \textbf{(21.6)} & $2.87 \cdot 10^{-3}$ & (8.3) \\
+\textit{39\_epri} & 282 & 99.10\% & 10 & $3.28 \cdot 10^{-2}$ & $\mathbf{1.21 \cdot 10^{-3}}$ & \textbf{(27.1)} & $3.43 \cdot 10^{-3}$ & (9.6) \\
+\textit{57\_ieee} & 448 & 99.41\% & 14 & $8.80 \cdot 10^{-2}$ & $\mathbf{3.96 \cdot 10^{-3}}$ & \textbf{(22.2)} & $9.23 \cdot 10^{-3}$ & (9.5) \\
+\textit{60\_c} & 518 & 99.56\% & 12 & $1.15 \cdot 10^{-1}$ & $\mathbf{2.36 \cdot 10^{-3}}$ & \textbf{(48.6)} & $8.61 \cdot 10^{-3}$ & (13.3) \\
+\textit{73\_ieee\_rts} & 824 & 99.74\% & 12 & $2.75 \cdot 10^{-1}$ & $\mathbf{3.47 \cdot 10^{-3}}$ & \textbf{(79.1)} & $1.54 \cdot 10^{-2}$ & (17.8) \\
+\textit{89\_pegase} & 1042 & 99.74\% & 26 & $5.61 \cdot 10^{-1}$ & $\mathbf{1.61 \cdot 10^{-2}}$ & \textbf{(34.8)} & $4.28 \cdot 10^{-2}$ & (13.1) \\
+\textit{118\_ieee} & 1088 & 99.77\% & 12 & $5.55 \cdot 10^{-1}$ & $\mathbf{5.25 \cdot 10^{-3}}$ & \textbf{(105.8)} & $3.13 \cdot 10^{-2}$ & (17.7) \\
+\textit{162\_ieee\_dtc} & 1484 & 99.82\% & 16 & $1.16 \cdot 10^{0}$ & $\mathbf{1.53 \cdot 10^{-2}}$ & \textbf{(75.7)} & $5.53 \cdot 10^{-2}$ & (20.9) \\
+\textit{179\_goc} & 1468 & 99.83\% & 14 & $1.08 \cdot 10^{0}$ & $\mathbf{1.33 \cdot 10^{-2}}$ & \textbf{(81.3)} & $5.06 \cdot 10^{-2}$ & (21.4) \\
+\textit{197\_snem} & 1608 & 99.85\% & 14 & $1.34 \cdot 10^{0}$ & $\mathbf{1.46 \cdot 10^{-2}}$ & \textbf{(92.2)} & $5.84 \cdot 10^{-2}$ & (23.0) \\
+\textit{200\_activ} & 1456 & 99.82\% & 12 & $1.02 \cdot 10^{0}$ & $\mathbf{6.94 \cdot 10^{-3}}$ & \textbf{(146.6)} & $3.88 \cdot 10^{-2}$ & (26.3) \\
+\textit{240\_pserc} & 2558 & 99.91\% & 16 & $3.51 \cdot 10^{0}$ & $\mathbf{2.50 \cdot 10^{-2}}$ & \textbf{(140.2)} & $1.04 \cdot 10^{-1}$ & (33.6) \\
+\textit{300\_ieee} & 2382 & 99.89\% & 14 & $3.00 \cdot 10^{0}$ & $\mathbf{2.14 \cdot 10^{-2}}$ & \textbf{(140.3)} & $9.67 \cdot 10^{-2}$ & (31.1) \\
+\textit{500\_goc} & 4254 & 99.94\% & 14 & $1.18 \cdot 10^{1}$ & $\mathbf{3.85 \cdot 10^{-2}}$ & \textbf{(307.3)} & $2.20 \cdot 10^{-1}$ & (53.7) \\
+\textit{588\_sdet} & 4110 & 99.94\% & 14 & $1.14 \cdot 10^{1}$ & $\mathbf{3.60 \cdot 10^{-2}}$ & \textbf{(316.1)} & $2.14 \cdot 10^{-1}$ & (53.3) \\
+\textit{793\_goc} & 5432 & 99.95\% & 14 & $2.17 \cdot 10^{1}$ & $\mathbf{4.91 \cdot 10^{-2}}$ & \textbf{(443.1)} & $3.33 \cdot 10^{-1}$ & (65.3) \\
+\textit{1354\_pegase} & 11192 & 99.98\% & 18 & $1.36 \cdot 10^{2}$ & $\mathbf{1.21 \cdot 10^{-1}}$ & \textbf{(1128.4)} & $6.21 \cdot 10^{-1}$ & (219.6) \\
+\textit{1803\_snem} & 15246 & 99.98\% & 16 & $2.09 \cdot 10^{2}$ & $\mathbf{1.66 \cdot 10^{-1}}$ & \textbf{(1259.5)} & $1.07 \cdot 10^{0}$ & (195.0) \\
+\textit{1888\_rte} & 14480 & 99.98\% & 18 & $8.15 \cdot 10^{2}$ & $\mathbf{1.43 \cdot 10^{-1}}$ & \textbf{(5706.7)} & $8.76 \cdot 10^{-1}$ & (930.4) \\
+\textit{1951\_rte} & 15018 & 99.98\% & 20 & $2.00 \cdot 10^{2}$ & $\mathbf{1.54 \cdot 10^{-1}}$ & \textbf{(1293.4)} & $1.00 \cdot 10^{0}$ & (199.1) \\
+\textit{2000\_goc} & 19008 & 99.99\% & 18 & $3.58 \cdot 10^{2}$ & $\mathbf{2.15 \cdot 10^{-1}}$ & \textbf{(1669.5)} & $1.61 \cdot 10^{0}$ & (222.7) \\
+\textit{2312\_goc} & 17128 & 99.98\% & 16 & $2.75 \cdot 10^{2}$ & $\mathbf{1.87 \cdot 10^{-1}}$ & \textbf{(1470.7)} & $1.35 \cdot 10^{0}$ & (204.5) \\
+\textit{2383wp\_k} & 17004 & 99.98\% & 16 & $2.65 \cdot 10^{2}$ & $\mathbf{1.80 \cdot 10^{-1}}$ & \textbf{(1468.2)} & $1.14 \cdot 10^{0}$ & (231.4) \\
+\textit{2736sp\_k} & 19088 & 99.99\% & 14 & $3.30 \cdot 10^{2}$ & $\mathbf{1.78 \cdot 10^{-1}}$ & \textbf{(1857.2)} & $1.40 \cdot 10^{0}$ & (235.5) \\
+\textit{2737sop\_k} & 18988 & 99.99\% & 16 & $3.29 \cdot 10^{2}$ & $\mathbf{2.02 \cdot 10^{-1}}$ & \textbf{(1629.8)} & $1.47 \cdot 10^{0}$ & (223.0) \\
+\textit{2742\_goc} & 24540 & 99.99\% & 14 & $6.50 \cdot 10^{2}$ & $\mathbf{2.41 \cdot 10^{-1}}$ & \textbf{(2694.1)} & $1.78 \cdot 10^{0}$ & (366.3) \\
+\textit{2746wop\_k} & 19582 & 99.99\% & 16 & $3.64 \cdot 10^{2}$ & $\mathbf{2.07 \cdot 10^{-1}}$ & \textbf{(1755.7)} & $1.54 \cdot 10^{0}$ & (235.6) \\
+\textit{2746wp\_k} & 19520 & 99.99\% & 14 & $3.53 \cdot 10^{2}$ & $\mathbf{1.77 \cdot 10^{-1}}$ & \textbf{(1991.4)} & $1.51 \cdot 10^{0}$ & (234.5) \\
+\textit{2848\_rte} & 21822 & 99.99\% & 20 & $4.67 \cdot 10^{2}$ & $\mathbf{2.24 \cdot 10^{-1}}$ & \textbf{(2083.5)} & $1.80 \cdot 10^{0}$ & (259.7) \\
+\textit{2853\_sdet} & 23028 & 99.99\% & 26 & $5.38 \cdot 10^{2}$ & $\mathbf{3.62 \cdot 10^{-1}}$ & \textbf{(1486.9)} & $1.68 \cdot 10^{0}$ & (320.6) \\
+\textit{2868\_rte} & 22090 & 99.99\% & 20 & $5.02 \cdot 10^{2}$ & $\mathbf{2.35 \cdot 10^{-1}}$ & \textbf{(2137.9)} & $1.73 \cdot 10^{0}$ & (290.0) \\
+\textit{2869\_pegase} & 25086 & 99.99\% & 28 & $5.08 \cdot 10^{2}$ & $\mathbf{4.07 \cdot 10^{-1}}$ & \textbf{(1249.0)} & $1.99 \cdot 10^{0}$ & (255.5) \\
+\textit{3012wp\_k} & 21082 & 99.99\% & 14 & $4.33 \cdot 10^{2}$ & $\mathbf{1.96 \cdot 10^{-1}}$ & \textbf{(2208.3)} & $1.77 \cdot 10^{0}$ & (245.1) \\
+\textit{3022\_goc} & 23238 & 99.99\% & 18 & $5.76 \cdot 10^{2}$ & $\mathbf{2.51 \cdot 10^{-1}}$ & \textbf{(2296.9)} & $1.48 \cdot 10^{0}$ & (390.7) \\
+\textit{3120sp\_k} & 21608 & 99.99\% & 18 & $4.56 \cdot 10^{2}$ & $\mathbf{2.26 \cdot 10^{-1}}$ & \textbf{(2019.2)} & $1.90 \cdot 10^{0}$ & (240.1) \\
+\textit{3375wp\_k} & 24350 & 99.99\% & 18 & $6.25 \cdot 10^{2}$ & $\mathbf{2.54 \cdot 10^{-1}}$ & \textbf{(2463.9)} & $1.71 \cdot 10^{0}$ & (365.1) \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]
+\footnotesize
+\item[1]Wall time in seconds.
+\item[2]Number of colors resulting from greedy symmetric coloring.
+\item[3]In parentheses: Wall time ratio compared to prepared prepared AD (higher is better).
+\end{tablenotes}
+\end{threeparttable}
+\caption{Performance comparison of AD and ASD Hessian computation on the Lagrangian of PGLib optimization problems.}
+\label{tab:opf_ad}
+\end{table}
