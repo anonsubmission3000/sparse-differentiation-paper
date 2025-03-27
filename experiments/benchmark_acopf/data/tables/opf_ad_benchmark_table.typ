@@ -399,6 +399,6 @@
     table.cell(colspan: 9)[#text(size: 0.8em)[
         #super[1]Wall time in seconds.\
         #super[2]Number of colors resulting from greedy column coloring.\
-        #super[3]In parentheses: Wall time ratio compared to prepared prepared AD (higher is better).
+        #super[3]In parentheses: Wall time ratio compared to prepared AD (higher is better).
     ]],
 )

@@ -12,7 +12,7 @@ df = collect_results(datadir("results"))
 # add normalized columns
 df = transform(
     df,
-    # Pattern detection
+    # Sparsity detection
     [:time_sp_sym, :time_sp_sct] => ByRow(/) => :ratio_detection_sct,
     :time_sp_sym => ByRow(x -> 1) => :ratio_detection_sym,
     # AD
@@ -50,6 +50,7 @@ timing_sparsity_detection = Matrix(df[:, [:time_sp_sym, :time_sp_sct]])
 ratios_detection = Matrix(df[:, [:ratio_detection_sym, :ratio_detection_sct]])
 timings_ad = Matrix(df[:, [:time_ad_prep, :time_asd_sct_prep, :time_asd_sct_noprep]])
 ratios_ad = Matrix(df[:, [:ratio_ad_prep, :ratio_asd_sct_prep, :ratio_asd_sct_noprep]])
+timings_solve = Matrix(df[:, [:time_ls_op_iter, :time_ls_sp_iter, :time_ls_sp_direct]])
 
 function cells_bold_smallest_scientific(A; halign=:center)
     bolds = fill(false, size(A)...)
@@ -66,6 +67,7 @@ cells_detection = cells_bold_smallest_scientific(timing_sparsity_detection)
 cells_ratios_detection = cells_bold_largest_along_row(ratios_detection, print_ratio)
 cells_timing_ad = cells_bold_smallest_scientific(timings_ad)
 cells_ratios_ad = cells_bold_largest_along_row(ratios_ad, print_ratio; halign=:center)
+cells_timing_solve = cells_bold_smallest_scientific(timings_solve)
 
 walltime_str = "Wall time in seconds."
 
@@ -73,7 +75,7 @@ walltime_str = "Wall time in seconds."
 # Detection #
 #===========#
 
-detection_ratio_str = "In parentheses: Wall time ratio compared to Symbolics.jl's pattern detection (higher is better)."
+detection_ratio_str = "In parentheses: Wall time ratio compared to Symbolics.jl's sparsity detection (higher is better)."
 
 header_detection = [
     "Problem",
@@ -81,9 +83,9 @@ header_detection = [
     "Problem",
     "Sparsity",
     "Sparsity",
-    Annotated("Pattern detection", walltime_str),
-    Annotated("Pattern detection", walltime_str),
-    Annotated("Pattern detection", walltime_str),
+    Annotated("Sparsity detection", walltime_str),
+    Annotated("Sparsity detection", walltime_str),
+    Annotated("Sparsity detection", walltime_str),
 ]
 vars_detection = [
     "N",
@@ -91,7 +93,7 @@ vars_detection = [
     "Outputs",
     "Zeros",
     Annotated("Colors", "Number of colors resulting from greedy column coloring."), # column colors
-    "Symbolics", # pattern detection
+    "Symbolics", # sparsity detection
     Annotated("SCT", detection_ratio_str),
     Annotated("SCT", detection_ratio_str),
 ]
@@ -119,27 +121,25 @@ ad_ratio_str = "In parentheses: Wall time ratio compared to prepared AD (higher 
 
 header_ad = [
     "Problem",
-    "Problem",
-    "Problem",
-    "Sparsity",
-    "Sparsity",
     Annotated("Jacobian computation", walltime_str), # Dense
     Annotated("Jacobian computation", walltime_str), # SCT
     Annotated("Jacobian computation", walltime_str), # SCT (ratio)
     Annotated("Jacobian computation", walltime_str), # Sym 
     Annotated("Jacobian computation", walltime_str), # Sym (ratio)
+    Annotated("Newton step", walltime_str),
+    Annotated("Newton step", walltime_str),
+    Annotated("Newton step", walltime_str),
 ]
 vars_ad = [
     "N",
-    "Inputs",
-    "Outputs",
-    "Zeros",
-    Annotated("Colors", "Number of colors resulting from greedy column coloring."), # column colors
-    "AD (prepared)", # AD
-    Annotated("ASD (prepared)", ad_ratio_str),
-    Annotated("ASD (prepared)", ad_ratio_str),
-    Annotated("ASD (unprepared)", ad_ratio_str),
-    Annotated("ASD (unprepared)", ad_ratio_str),
+    L"\makecell{\text{AD} \\ \text{(prepared)}}", # AD
+    Annotated(L"\makecell{\text{ASD} \\ \text{(prepared)}}", ad_ratio_str),
+    Annotated(L"\makecell{\text{ASD} \\ \text{(prepared)}}", ad_ratio_str),
+    Annotated(L"\makecell{\text{ASD} \\ \text{(unprepared)}}", ad_ratio_str),
+    Annotated(L"\makecell{\text{ASD} \\ \text{(unprepared)}}", ad_ratio_str),
+    L"\makecell{\text{JVP} \\ \text{(iterative)}}", # AD
+    L"\makecell{\text{Jacobian} \\ \text{(iterative)}}", # AD
+    L"\makecell{\text{Jacobian} \\ \text{(direct)}}", # AD
 ]
 @assert length(header_ad) == length(vars_ad)
 
@@ -148,19 +148,20 @@ table_ad = Table(
         Cell.(header_ad, bold=true, merge=true, border_bottom=true)',
         Cell.(vars_ad, merge=true, border_bottom=true)',
         hcat(
-            Cell.(problems),
-            Cell.(rel_sparsity),
-            Cell.(colors),
+            Cell.(problems[:, 1]),
             cells_timing_ad[:, 1],
             cells_timing_ad[:, 2],
             cells_ratios_ad[:, 2],
             cells_timing_ad[:, 3],
             cells_ratios_ad[:, 3],
+            cells_timing_solve[:, 1],
+            cells_timing_solve[:, 2],
+            cells_timing_solve[:, 3],
         ),
     ),
 )
 
-function save(table, file_name)
+function save_table(table, file_name)
     ## LaTeX
     texfile = joinpath(datadir("tables"), "$file_name.tex")
     open(texfile, "w") do io
@@ -181,5 +182,5 @@ function save(table, file_name)
     end
 end
 
-save(table_detection, "brusselator_detection_benchmark_table")
-save(table_ad, "brusselator_ad_benchmark_table")
+save_table(table_detection, "brusselator_detection_benchmark_table")
+save_table(table_ad, "brusselator_ad_benchmark_table")

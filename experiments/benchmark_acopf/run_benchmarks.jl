@@ -64,28 +64,32 @@ function run_opf_benchmarks(d::Dict)
         error("Hessians don't match.")
     end
 
-    @info "Running pattern detection benchmarks..."
+    @info "Running sparsity detection benchmarks..."
     bm_sp_sct = @b hessian_sparsity($lagrangian, $x, $detector_sct) seconds = cm_seconds
     @info "...Detection SCT:" bm_sp_sct.time
     bm_sp_sym = @b hessian_sparsity($lagrangian, $x, $detector_sym) seconds = cm_seconds
     @info "...Detection Symbolics:" bm_sp_sym.time
 
     @info "Running AD benchmarks..."
-    bm_dense_prepped = @b hessian($lagrangian, $prep_dense, $backend_dense, $x) seconds =
+    bm_dense_preparation = @b prepare_hessian($lagrangian, $backend_dense, $x) seconds =
         cm_seconds
-    @info "...Dense AD (prepped):" bm_dense_prepped.time
-    bm_sparse_prepped = @b hessian($lagrangian, $prep_sparse, $backend_sparse, $x) seconds =
+    @info "...Dense AD (preparation):" bm_dense_preparation.time
+    bm_dense_execution = @b hessian($lagrangian, $prep_dense, $backend_dense, $x) seconds =
         cm_seconds
-    @info "...Sparse AD (prepped):" bm_sparse_prepped.time
-    bm_sparse_unprepped = @b hessian($lagrangian, $backend_sparse, $x) seconds = cm_seconds
-    @info "...Sparse AD (unprepped):" bm_sparse_unprepped.time
+    @info "...Dense AD (execution):" bm_dense_execution.time
+    bm_sparse_preparation = @b prepare_hessian($lagrangian, $backend_sparse, $x) seconds =
+        cm_seconds
+    @info "...Sparse AD (preparation):" bm_sparse_preparation.time
+    bm_sparse_execution = @b hessian($lagrangian, $prep_sparse, $backend_sparse, $x) seconds =
+        cm_seconds
+    @info "...Sparse AD (execution):" bm_sparse_execution.time
 
     # Save benchmark results
     res = Dict(
         :case_name => strip_file_name(case_file),
-        :time_dense_prepped => bm_dense_prepped.time,
-        :time_sparse_prepped => bm_sparse_prepped.time,
-        :time_sparse_unprepped => bm_sparse_unprepped.time,
+        :time_dense_prepped => bm_dense_execution.time,
+        :time_sparse_prepped => bm_sparse_execution.time,
+        :time_sparse_unprepped => bm_sparse_preparation.time + bm_sparse_execution.time,
         :time_sp_sct => bm_sp_sct.time,
         :time_sp_sym => bm_sp_sym.time,
         :rows => rows,

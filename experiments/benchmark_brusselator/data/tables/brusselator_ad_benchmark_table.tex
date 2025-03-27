@@ -2,27 +2,26 @@
 \setlength\tabcolsep{0pt}
 \centering
 \begin{threeparttable}
-\begin{tabular}{@{\extracolsep{2ex}}*{10}{cccccccccc}}
+\begin{tabular}{@{\extracolsep{2ex}}*{9}{ccccccccc}}
 \toprule
-\multicolumn{3}{c}{\textbf{Problem}} & \multicolumn{2}{c}{\textbf{Sparsity}} & \multicolumn{5}{c}{\textbf{Jacobian computation\tnote{1}}} \\
-\cmidrule{1-3}\cmidrule{4-5}\cmidrule{6-10}
-N & Inputs & Outputs & Zeros & Colors\tnote{2} & AD (prepared) & \multicolumn{2}{c}{ASD (prepared)\tnote{3}} & \multicolumn{2}{c}{ASD (unprepared)\tnote{3}} \\
-\cmidrule{1-1}\cmidrule{2-2}\cmidrule{3-3}\cmidrule{4-4}\cmidrule{5-5}\cmidrule{6-6}\cmidrule{7-8}\cmidrule{9-10}
-6 & 72 & 72 & 91.67\% & 9 & $1.79 \cdot 10^{-5}$ & $\mathbf{2.69 \cdot 10^{-6}}$ & \textbf{(6.7)} & $3.59 \cdot 10^{-5}$ & (0.5) \\
-12 & 288 & 288 & 97.92\% & 10 & $2.61 \cdot 10^{-4}$ & $\mathbf{1.15 \cdot 10^{-5}}$ & \textbf{(22.8)} & $1.76 \cdot 10^{-4}$ & (1.5) \\
-24 & 1152 & 1152 & 99.48\% & 10 & $4.97 \cdot 10^{-3}$ & $\mathbf{4.62 \cdot 10^{-5}}$ & \textbf{(107.7)} & $1.42 \cdot 10^{-3}$ & (3.5) \\
-48 & 4608 & 4608 & 99.87\% & 10 & $9.14 \cdot 10^{-2}$ & $\mathbf{2.23 \cdot 10^{-4}}$ & \textbf{(409.8)} & $2.07 \cdot 10^{-2}$ & (4.4) \\
-96 & 18432 & 18432 & 99.97\% & 10 & $1.51 \cdot 10^{0}$ & $\mathbf{9.06 \cdot 10^{-4}}$ & \textbf{(1662.9)} & $3.22 \cdot 10^{-1}$ & (4.7) \\
-192 & 73728 & 73728 & 99.99\% & 10 & $2.58 \cdot 10^{1}$ & $\mathbf{3.91 \cdot 10^{-3}}$ & \textbf{(6600.0)} & $1.04 \cdot 10^{1}$ & (2.5) \\
+\textbf{Problem} & \multicolumn{5}{c}{\textbf{Jacobian computation\tnote{1}}} & \multicolumn{3}{c}{\textbf{Newton step\tnote{1}}} \\
+\cmidrule{1-1}\cmidrule{2-6}\cmidrule{7-9}
+N & $\makecell{\text{AD} \\ \text{(prepared)}}$ & \multicolumn{2}{c}{$\makecell{\text{ASD} \\ \text{(prepared)}}$\tnote{2}} & \multicolumn{2}{c}{$\makecell{\text{ASD} \\ \text{(unprepared)}}$\tnote{2}} & $\makecell{\text{JVP} \\ \text{(iterative)}}$ & $\makecell{\text{Jacobian} \\ \text{(iterative)}}$ & $\makecell{\text{Jacobian} \\ \text{(direct)}}$ \\
+\cmidrule{1-1}\cmidrule{2-2}\cmidrule{3-4}\cmidrule{5-6}\cmidrule{7-7}\cmidrule{8-8}\cmidrule{9-9}
+6 & $1.64 \cdot 10^{-5}$ & $\mathbf{1.97 \cdot 10^{-6}}$ & \textbf{(8.3)} & $3.36 \cdot 10^{-5}$ & (0.5) & $\mathbf{2.07 \cdot 10^{-5}}$ & $2.19 \cdot 10^{-5}$ & $4.52 \cdot 10^{-5}$ \\
+12 & $2.44 \cdot 10^{-4}$ & $\mathbf{8.67 \cdot 10^{-6}}$ & \textbf{(28.1)} & $1.70 \cdot 10^{-4}$ & (1.4) & $\mathbf{1.34 \cdot 10^{-4}}$ & $1.61 \cdot 10^{-4}$ & $2.42 \cdot 10^{-4}$ \\
+24 & $4.02 \cdot 10^{-3}$ & $\mathbf{3.43 \cdot 10^{-5}}$ & \textbf{(117.2)} & $1.31 \cdot 10^{-3}$ & (3.1) & $\mathbf{1.04 \cdot 10^{-3}}$ & $1.34 \cdot 10^{-3}$ & $1.24 \cdot 10^{-3}$ \\
+48 & $7.60 \cdot 10^{-2}$ & $\mathbf{1.68 \cdot 10^{-4}}$ & \textbf{(451.4)} & $1.70 \cdot 10^{-2}$ & (4.5) & $\mathbf{8.34 \cdot 10^{-3}}$ & $1.17 \cdot 10^{-2}$ & $8.98 \cdot 10^{-3}$ \\
+96 & $1.35 \cdot 10^{0}$ & $\mathbf{6.68 \cdot 10^{-4}}$ & \textbf{(2017.2)} & $2.16 \cdot 10^{-1}$ & (6.2) & $7.56 \cdot 10^{-2}$ & $1.11 \cdot 10^{-1}$ & $\mathbf{4.07 \cdot 10^{-2}}$ \\
+192 & $2.25 \cdot 10^{1}$ & $\mathbf{3.09 \cdot 10^{-3}}$ & \textbf{(7293.5)} & $4.62 \cdot 10^{0}$ & (4.9) & $1.05 \cdot 10^{0}$ & $1.07 \cdot 10^{0}$ & $\mathbf{2.30 \cdot 10^{-1}}$ \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}[flushleft]
 \footnotesize
 \item[1]Wall time in seconds.
-\item[2]Number of colors resulting from greedy column coloring.
-\item[3]In parentheses: Wall time ratio compared to prepared AD (higher is better).
+\item[2]In parentheses: Wall time ratio compared to prepared AD (higher is better).
 \end{tablenotes}
 \end{threeparttable}
-\caption{Performance comparison of AD and ASD Jacobian computation on the Brusselator PDE.}
+\caption{Performance comparison of Jacobian computation \& linear solves on the Brusselator PDE.}
 \label{tab:brusselator_ad}
 \end{table}

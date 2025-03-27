@@ -1,13 +1,13 @@
 using Pkg
 Pkg.activate(@__DIR__)
 
-using SparseConnectivityTracer  # sparsity pattern detection
+using SparseConnectivityTracer  # sparsity detection
 using SparseMatrixColorings     # sparsity pattern coloring
 using DifferentiationInterface  # common interface to AD backends
 using ForwardDiff               # forward-mode AD backend
 using Flux                      # deep learning framework
 
-# Specify global sparsity pattern detection and coloring algorithm
+# Specify global sparsity detection and coloring algorithm
 detector = TracerSparsityDetector()
 coloring = GreedyColoringAlgorithm()
 

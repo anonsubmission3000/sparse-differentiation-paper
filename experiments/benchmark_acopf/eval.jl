@@ -19,7 +19,7 @@ end
 df = transform(
     df,
     [:case_name] => ByRow(extract_case_number) => :case_number,
-    # Pattern detection
+    # Sparsity detection
     [:time_sp_sym, :time_sp_sct] => ByRow(/) => :ratio_detection_sct,
     :time_sp_sym => ByRow(x -> 1) => :ratio_detection_sym,
     # AD
@@ -86,23 +86,23 @@ walltime_str = "Wall time in seconds."
 # Detection #
 #===========#
 
-detection_ratio_str = "In parentheses: Wall time ratio compared to Symbolics.jl's pattern detection (higher is better)."
+detection_ratio_str = "In parentheses: Wall time ratio compared to Symbolics.jl's sparsity detection (higher is better)."
 
 header_detection = [
     "Problem",
     "Problem",
     "Sparsity",
     "Sparsity",
-    Annotated("Pattern detection", walltime_str),
-    Annotated("Pattern detection", walltime_str),
-    Annotated("Pattern detection", walltime_str),
+    Annotated("Sparsity detection", walltime_str),
+    Annotated("Sparsity detection", walltime_str),
+    Annotated("Sparsity detection", walltime_str),
 ]
 vars_detection = [
     "Name",
     "Inputs",
     "Zeros",
     Annotated("Colors", "Number of colors resulting from greedy symmetric coloring."), # column colors
-    "Symbolics", # pattern detection
+    "Symbolics", # sparsity detection
     Annotated("SCT", detection_ratio_str),
     Annotated("SCT", detection_ratio_str),
 ]
@@ -143,14 +143,14 @@ table_detection_short = Table(
 # Autodiff #
 #==========#
 
-ratio_str = "In parentheses: Wall time ratio compared to prepared prepared AD (higher is better)."
+ratio_str = "In parentheses: Wall time ratio compared to prepared AD (higher is better)."
 
 header = [
     "Problem",
     "Problem",
     "Sparsity",
     "Sparsity",
-    # Annotated("Pattern detection", walltime_str),
+    # Annotated("Sparsity detection", walltime_str),
     Annotated("Hessian computation", walltime_str), # Dense prep
     Annotated("Hessian computation", walltime_str), # Sym prep
     Annotated("Hessian computation", walltime_str), # Sym prep (ratio)
@@ -162,7 +162,7 @@ vars = [
     "Inputs",
     "Zeros",
     Annotated("Colors", "Number of colors resulting from greedy symmetric coloring."), # column colors
-    # "SCT", # pattern detection
+    # "SCT", # sparsity detection
     "AD (prepared)", # AD
     Annotated("ASD (prepared)", ratio_str),
     Annotated("ASD (prepared)", ratio_str),

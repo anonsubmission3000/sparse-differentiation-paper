@@ -10,7 +10,7 @@
     table.hline(y: 1, start: 0, end: 2, stroke: 0.75pt),
     table.cell(colspan: 2)[*Sparsity*],
     table.hline(y: 1, start: 2, end: 4, stroke: 0.75pt),
-    table.cell(colspan: 3)[*Pattern detection#super[1]*],
+    table.cell(colspan: 3)[*Sparsity detection#super[1]*],
     table.hline(y: 1, start: 4, end: 7, stroke: 0.75pt),
     table.cell(align: center)[Name],
     table.hline(y: 2, start: 0, end: 1, stroke: 0.75pt),
@@ -70,6 +70,6 @@
     table.cell(colspan: 7)[#text(size: 0.8em)[
         #super[1]Wall time in seconds.\
         #super[2]Number of colors resulting from greedy column coloring.\
-        #super[3]In parentheses: Wall time ratio compared to Symbolics.jl's pattern detection (higher is better).
+        #super[3]In parentheses: Wall time ratio compared to Symbolics.jl's sparsity detection (higher is better).
     ]],
 )

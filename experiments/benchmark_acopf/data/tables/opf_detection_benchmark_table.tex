@@ -4,7 +4,7 @@
 \begin{threeparttable}
 \begin{tabular}{@{\extracolsep{2ex}}*{7}{lcccccc}}
 \toprule
-\multicolumn{2}{c}{\textbf{Problem}} & \multicolumn{2}{c}{\textbf{Sparsity}} & \multicolumn{3}{c}{\textbf{Pattern detection\tnote{1}}} \\
+\multicolumn{2}{c}{\textbf{Problem}} & \multicolumn{2}{c}{\textbf{Sparsity}} & \multicolumn{3}{c}{\textbf{Sparsity detection\tnote{1}}} \\
 \cmidrule{1-2}\cmidrule{3-4}\cmidrule{5-7}
 \multicolumn{1}{c}{Name} & Inputs & Zeros & Colors\tnote{2} & Symbolics & \multicolumn{2}{c}{SCT\tnote{3}} \\
 \cmidrule{1-1}\cmidrule{2-2}\cmidrule{3-3}\cmidrule{4-4}\cmidrule{5-5}\cmidrule{6-7}
@@ -55,9 +55,9 @@
 \footnotesize
 \item[1]Wall time in seconds.
 \item[2]Number of colors resulting from greedy symmetric coloring.
-\item[3]In parentheses: Wall time ratio compared to Symbolics.jl's pattern detection (higher is better).
+\item[3]In parentheses: Wall time ratio compared to Symbolics.jl's sparsity detection (higher is better).
 \end{tablenotes}
 \end{threeparttable}
-\caption{Performance comparison of Hessian sparsity pattern detection on the Lagrangian of PGLib optimization problems.}
+\caption{Performance comparison of Hessian sparsity detection on the Lagrangian of PGLib optimization problems.}
 \label{tab:opf_detection}
 \end{table}

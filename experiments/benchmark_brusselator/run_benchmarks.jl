@@ -6,6 +6,7 @@ using SparseConnectivityTracer
 using Symbolics
 using DifferentiationInterface
 using ForwardDiff: ForwardDiff
+using LinearMaps, IterativeSolvers
 
 # Save sparsity pattern as image
 using SparseMatrixColorings
@@ -43,13 +44,24 @@ function run_brusselator_benchmarks(d::Dict)
 
     # Prepare benchmark
     f! = Brusselator!(N)
-    x = rand(N, N, 2)
+    x = copy(f!.u0)
     y = similar(x)
+    f!(y, x)
+    rhs = copy(y)
 
     # Prepare backends
+    prep_ad_pushforward = prepare_pushforward(f!, y, backend_ad, x, (zero(x),))
     prep_ad = prepare_jacobian(f!, y, backend_ad, x)
     prep_asd_sct = prepare_jacobian(f!, y, backend_asd_sct, x)
     prep_asd_sym = prepare_jacobian(f!, y, backend_asd_sym, x)
+
+    pushforward!_linear_map = LinearMap(
+        (res, v) -> pushforward!(f!, y, (res,), prep_ad_pushforward, backend_ad, x, (v,)),
+        length(y),
+        length(x);
+        ismutating=true,
+        issymmetric=false,
+    )
 
     @info "Computing initial sparsity pattern..."
     pattern = sparsity_pattern(prep_asd_sct)
@@ -73,6 +85,13 @@ function run_brusselator_benchmarks(d::Dict)
     if !isapprox(J_ad, J_asd_sym)
         error("AD and AST (Symbolics) Jacobians don't match.")
     end
+
+    # Dry run to ensure linear solves match
+    res_op_iter = bicgstabl(pushforward!_linear_map, rhs)
+    res_sparse_iter = bicgstabl(J_asd_sct, rhs)
+    res_sparse_direct = J_asd_sct \ rhs
+    @assert isapprox(res_op_iter, res_sparse_iter; rtol=1e-5)
+    @assert isapprox(res_sparse_direct, res_sparse_iter; rtol=1e-5)
 
     ## Color Matrix to save image
     if N <= 24
@@ -102,43 +121,57 @@ function run_brusselator_benchmarks(d::Dict)
     end
 
     ## Run benchmarks
-    @info "Running pattern detection benchmarks..."
+    @info "Running sparsity detection benchmarks..."
     bm_sp_sct = @b jacobian_sparsity($f!, $y, $x, $detector_sct) seconds = cm_seconds
     bm_sp_sym = @b jacobian_sparsity($f!, $y, $x, $detector_sym) seconds = cm_seconds
 
     @info "Running AD benchmarks..."
 
-    bm_ad_prep = @b jacobian($f!, $y, $prep_ad, $backend_ad, $x) seconds = cm_seconds
-    @info "...AD (prep):" bm_ad_prep.time
+    bm_ad_preparation = @b prepare_jacobian($f!, $y, $backend_ad, $x) seconds = cm_seconds
+    @info "...AD preparation:" bm_ad_preparation.time
 
-    bm_ad_noprep = @b jacobian($f!, $y, $backend_ad, $x) seconds = cm_seconds
-    @info "...AD (no prep):" bm_ad_noprep.time
+    bm_ad_execution = @b jacobian($f!, $y, $prep_ad, $backend_ad, $x) seconds = cm_seconds
+    @info "...AD execution:" bm_ad_execution.time
 
-    bm_asd_sct_prep = @b jacobian($f!, $y, $prep_asd_sct, $backend_asd_sct, $x) seconds =
+    bm_asd_sct_preparation = @b prepare_jacobian($f!, $y, $backend_asd_sct, $x) seconds =
         cm_seconds
-    @info "...ASD (SCT, prep):" bm_asd_sct_prep.time
+    @info "...ASD (SCT) preparation:" bm_asd_sct_preparation.time
 
-    bm_asd_sct_noprep = @b jacobian($f!, $y, $backend_asd_sct, $x) seconds = cm_seconds
-    @info "...ASD (SCT, no prep):" bm_asd_sct_noprep.time
-
-    bm_asd_sym_prep = @b jacobian($f!, $y, $prep_asd_sym, $backend_asd_sym, $x) seconds =
+    bm_asd_sct_execution = @b jacobian($f!, $y, $prep_asd_sct, $backend_asd_sct, $x) seconds =
         cm_seconds
-    @info "...ASD (Symbolics, prep):" bm_asd_sym_prep.time
+    @info "...ASD (SCT) execution:" bm_asd_sct_execution.time
 
-    bm_asd_sym_noprep = @b jacobian($f!, $y, $backend_asd_sym, $x) seconds = cm_seconds
-    @info "...ASD (Symbolics, no prep):" bm_asd_sym_noprep.time
+    bm_asd_sym_preparation = @b prepare_jacobian($f!, $y, $backend_asd_sym, $x) seconds =
+        cm_seconds
+    @info "...ASD (Symbolics) preparation:" bm_asd_sym_preparation.time
+
+    bm_asd_sym_execution = @b jacobian($f!, $y, $prep_asd_sym, $backend_asd_sym, $x) seconds =
+        cm_seconds
+    @info "...ASD (Symbolics) execution:" bm_asd_sym_execution.time
+
+    bm_linsolve_operator_iterative = @b bicgstabl($pushforward!_linear_map, $rhs)
+    @info "...Linsolve (lazy operator, iterative solver)" bm_linsolve_operator_iterative.time
+
+    bm_linsolve_sparse_iterative = @b bicgstabl($J_asd_sct, $rhs)
+    @info "...Linsolve (sparse matrix, iterative solver)" bm_linsolve_sparse_iterative.time
+
+    bm_linsolve_sparse_direct = @b \($J_asd_sct, $rhs)
+    @info "...Linsolve (sparse matrix, direct solver)" bm_linsolve_sparse_direct.time
 
     ## Save benchmark results
     res = Dict(
         :N => N,
-        :time_ad_prep => bm_ad_prep.time,
-        :time_ad_noprep => bm_ad_noprep.time,
-        :time_asd_sct_prep => bm_asd_sct_prep.time,
-        :time_asd_sct_noprep => bm_asd_sct_noprep.time,
-        :time_asd_sym_prep => bm_asd_sym_prep.time,
-        :time_asd_sym_noprep => bm_asd_sym_noprep.time,
+        :time_ad_prep => bm_ad_execution.time,
+        :time_ad_noprep => bm_ad_preparation.time + bm_ad_execution.time,
+        :time_asd_sct_prep => bm_asd_sct_execution.time,
+        :time_asd_sct_noprep => bm_asd_sct_preparation.time + bm_asd_sct_execution.time,
+        :time_asd_sym_prep => bm_asd_sym_execution.time,
+        :time_asd_sym_noprep => bm_asd_sym_preparation.time + bm_asd_sym_execution.time,
         :time_sp_sct => bm_sp_sct.time,
         :time_sp_sym => bm_sp_sym.time,
+        :time_ls_op_iter => bm_linsolve_operator_iterative.time,
+        :time_ls_sp_iter => bm_asd_sct_execution.time + bm_linsolve_sparse_iterative.time,
+        :time_ls_sp_direct => bm_asd_sct_execution.time + bm_linsolve_sparse_direct.time,
         :rows => rows,
         :cols => cols,
         :n_zeros => n_zeros,
